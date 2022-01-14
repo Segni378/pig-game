@@ -66,7 +66,8 @@ nav.active {
   flex: 1;
   cursor: pointer;
 }
-.times, .close-modal {
+.times,
+.close-modal {
   position: absolute;
   top: 7px;
   right: 12px;
@@ -95,6 +96,7 @@ nav.active {
   text-align: center;
   overflow: hidden;
   padding: 10px;
+  
 }
 .modal .developer-info {
   margin-top: 15px;
@@ -205,6 +207,7 @@ main {
 }
 .hidden {
   display: none;
+  transition: 1s ease-out;
 }
 
 .message {
