@@ -233,6 +233,7 @@ main {
     background-image: linear-gradient(to top left, #242324 0%, #181717 100%);
     box-shadow: 0 1.75rem 3.5rem rgba(0, 0, 0, 0.1);
     border-bottom-right-radius: 5px;
+    z-index: 20;
   }
   main {
     margin-top: 100px;
