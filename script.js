@@ -1,5 +1,15 @@
 "use strict";
 
+const closeNav = document.querySelector(".times");
+const nav = document.querySelector("nav");
+const menuBar = document.querySelector(".menu-bar");
+const newGame = document.querySelector(".nav-new-game");
+const guide = document.querySelector(".Guide");
+const about = document.querySelector(".About");
+const aboutModal = document.querySelector(".about-modal");
+const guideModal = document.querySelector(".guide-modal");
+const overlay = document.querySelector(".overlay");
+const closeModal = document.querySelectorAll(".close-modal");
 const player = document.querySelectorAll(".player");
 const player1 = document.querySelector(".player--0");
 const player2 = document.querySelector(".player--1");
@@ -9,6 +19,45 @@ const btnNew = document.querySelector(".btn--new");
 const btnRoll = document.querySelector(".btn--roll");
 const btnHold = document.querySelector(".btn--hold");
 const dice = document.querySelector(".dice");
+
+// Navbar functionality;
+
+const handleModal = function () {
+  if (!aboutModal.classList.contains("hidden")) {
+    aboutModal.classList.add("hidden");
+  }
+  if (!guideModal.classList.contains("hidden")) {
+    guideModal.classList.add("hidden");
+  }
+  overlay.classList.add("hidden");
+};
+menuBar.addEventListener("click", function () {
+  nav.classList.add("active");
+});
+closeNav.addEventListener("click", function () {
+  nav.classList.remove("active");
+});
+
+guide.addEventListener("click", function () {
+  guideModal.classList.remove("hidden");
+  overlay.classList.remove("hidden");
+});
+about.addEventListener("click", function () {
+  aboutModal.classList.remove("hidden");
+  overlay.classList.remove("hidden");
+});
+overlay.addEventListener("click", function () {
+  handleModal();
+  overlay.classList.add("hidden");
+});
+
+for (let i = 0; i < closeModal.length; i++) {
+  closeModal[i].addEventListener("click", function () {
+    handleModal();
+  });
+}
+
+//******** Game Logic *********/
 
 // Initially hide dice
 dice.classList.add("hidden");
@@ -24,6 +73,25 @@ const handlePlayers = () => {
       currentPlayer = player[i];
     }
   }
+};
+const resetEverything = function () {
+  currentScore = 0;
+  player1Score.textContent = "0";
+  player2Score.textContent = "0";
+  currentPlayer
+    .querySelector(".current")
+    .querySelector(".current-score").textContent = "0";
+  currentPlayer.classList.remove("winner");
+  currentPlayer = player1;
+  if (!player1.classList.contains("player--active")) {
+    player1.classList.add("player--active");
+    player2.classList.remove("player--active");
+  }
+  dice.style.display = "none";
+  btnHold.disabled = false;
+  btnRoll.disabled = false;
+  btnHold.style.cursor = "pointer";
+  btnRoll.style.cursor = "pointer";
 };
 
 let currentScore = 0;
@@ -66,25 +134,12 @@ btnHold.addEventListener("click", function () {
 });
 
 btnNew.addEventListener("click", function () {
-  currentScore = 0;
-  player1Score.textContent = "0";
-  player2Score.textContent = "0";
-  currentPlayer
-    .querySelector(".current")
-    .querySelector(".current-score").textContent = "0";
-  currentPlayer.classList.remove("winner");
-  currentPlayer = player1;
-  if (!player1.classList.contains("player--active")) {
-    player1.classList.add("player--active");
-    player2.classList.remove("player--active");
-  }
-  dice.style.display = "none";
-  btnHold.disabled = false;
-  btnRoll.disabled = false;
-  btnHold.style.cursor = "pointer";
-  btnRoll.style.cursor = "pointer";
+  resetEverything();
 });
-
+newGame.addEventListener("click", function () {
+  resetEverything();
+  nav.classList.remove("active");
+});
 const trophy = () => {
   currentPlayer.classList.add("winner");
   btnHold.disabled = true;
